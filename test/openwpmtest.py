@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import List, Optional, Tuple
+from typing import List, Literal, Optional, Tuple
 
 import pytest
 
@@ -51,7 +51,7 @@ class OpenWPMTest:
         self,
         data_dir: Optional[Path] = None,
         num_browsers: int = NUM_BROWSERS,
-        display_mode: str = "headless",
+        display_mode: Literal["headless", "xvfb"] = "headless",
     ) -> Tuple[ManagerParams, List[BrowserParams]]:
         """Load and return the default test parameters."""
         if not data_dir:
@@ -59,7 +59,7 @@ class OpenWPMTest:
         assert data_dir is not None  # Mypy doesn't understand this without help
         manager_params = ManagerParams(num_browsers=num_browsers)
         browser_params = [BrowserParams() for _ in range(num_browsers)]
-        manager_params.log_directory = data_dir
+        manager_params.log_path = data_dir / "openwpm.log"
         manager_params.num_browsers = num_browsers
         for i in range(num_browsers):
             browser_params[i].display_mode = display_mode

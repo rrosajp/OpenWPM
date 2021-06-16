@@ -1,5 +1,6 @@
 
 OpenWPM
+[![Documentation Status](https://readthedocs.org/projects/openwpm/badge/?version=latest)](https://openwpm.readthedocs.io/en/latest/?badge=latest)
 [![Build Status](https://github.com/mozilla/openwpm/workflows/Tests%20and%20linting/badge.svg?branch=master)](https://github.com/mozilla/openwpm/actions?query=branch%3Amaster)
 [![OpenWPM Matrix Channel](https://img.shields.io/matrix/OpenWPM:mozilla.org?label=Join%20us%20on%20matrix&server_fqdn=mozilla.modular.im)](https://matrix.to/#/#OpenWPM:mozilla.org?via=mozilla.org) <!-- omit in toc -->
 =======
@@ -19,6 +20,7 @@ Table of Contents <!-- omit in toc -->
   - [Mac OSX](#mac-osx)
 - [Quick Start](#quick-start)
 - [Troubleshooting](#troubleshooting)
+- [Documentation](#documentation)
 - [Advice for Measurement Researchers](#advice-for-measurement-researchers)
 - [Developer instructions](#developer-instructions)
 - [Instrumentation and Configuration](#instrumentation-and-configuration)
@@ -151,6 +153,12 @@ Troubleshooting
    into this problem.
 
 
+Documentation
+-------------
+
+Further information is available at [OPENWPM's Documentation Page](https://openwpm.readthedocs.io).
+
+
 Advice for Measurement Researchers
 ----------------------------------
 
@@ -268,7 +276,7 @@ Then you can run the demo script using:
 ```bash
     mkdir -p docker-volume && docker run -v $PWD/docker-volume:/opt/Desktop \
     -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --shm-size=2g \
-    -it openwpm python3 /opt/OpenWPM/demo.py
+    -it openwpm
 ```
 
 **Note:** the `--shm-size=2g` parameter is required, as it increases the

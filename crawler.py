@@ -4,9 +4,10 @@ import os
 import signal
 import sys
 import time
+import typing
 from pathlib import Path
 from threading import Lock
-from typing import Any, Callable, List
+from typing import Any, Callable, List, Literal
 
 import sentry_sdk
 
@@ -36,6 +37,8 @@ AUTH_TOKEN = os.getenv("GCP_AUTH_TOKEN", "cloud")
 
 # Browser Params
 DISPLAY_MODE = os.getenv("DISPLAY_MODE", "headless")
+assert DISPLAY_MODE in ["headless", "xvfb", "native"]
+DISPLAY_MODE = typing.cast(Literal["headless", "xvfb", "native"], DISPLAY_MODE)
 HTTP_INSTRUMENT = os.getenv("HTTP_INSTRUMENT", "1") == "1"
 COOKIE_INSTRUMENT = os.getenv("COOKIE_INSTRUMENT", "1") == "1"
 NAVIGATION_INSTRUMENT = os.getenv("NAVIGATION_INSTRUMENT", "1") == "1"
@@ -86,7 +89,7 @@ for i in range(NUM_BROWSERS):
 
 # Manager configuration
 manager_params.data_directory = Path("~/Desktop/") / CRAWL_DIRECTORY
-manager_params.log_directory = Path("~/Desktop/") / CRAWL_DIRECTORY
+manager_params.log_path = Path("~/Desktop/") / CRAWL_DIRECTORY / "openwpm.log"
 
 structured = GcsStructuredProvider(
     project=GCP_PROJECT,
@@ -223,7 +226,7 @@ while not job_queue.empty():
         reset=True,
         retry_number=retry_number,
         callback=callback,
-        site_rank=site_rank,
+        site_rank=int(site_rank),
     )
     command_sequence.get(sleep=DWELL_TIME, timeout=TIMEOUT)
     manager.execute_command_sequence(command_sequence)
